@@ -1,0 +1,5 @@
+include *.txt
+include README.md
+include pippt/*.py
+include pippt/script/*.py
+include pippt/data/*.dat

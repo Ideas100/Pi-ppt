@@ -1,0 +1,40 @@
+from pippt import *
+
+app = Pippt()
+
+# title-slide
+frame1 = add_title_slide()
+frame1.title('Sample title slide')
+frame1.subtitle('pippt')
+
+# slide-1
+frame2 = add_slide()
+frame2.title('Sample slide-1')
+frame2.content('Add contents for slide')
+
+# slide-2
+frame3 = add_slide()
+frame3.title('Sample slide-2')
+frame3.content('Add a image for slide')
+frame3.image(path='images/image.png', align='center')
+
+# slide-3
+frame4 = add_slide()
+frame4.title('Sample slide-2')
+frame4.content('Add a code block')
+frame4.codeblock(path='code/code.c')
+
+# spilt slide
+frame5 = add_split_slide()
+frame5.title('Sample split slide-3')
+
+content = """
+Add content to left side of 
+the slide's
+"""
+frame5.content(content, align='left', justify='left')
+frame5.image(path='images/image.png', align='right')
+
+
+app.bundle(frame1, frame2, frame3, frame4, frame5)
+app.mainloop()
