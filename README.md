@@ -10,6 +10,8 @@ Requires a Tkinter module.
 
 `$ apt-get install python3-tk`
 
+`$ apt-get install python3-pil python3-pil.imagetk`
+
 ### Installation:
 Install using pip.
 
