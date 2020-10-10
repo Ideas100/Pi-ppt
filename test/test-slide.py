@@ -19,11 +19,7 @@ frame1.content(string, justify='left')
 frame2 = add_slide()
 frame2.title('Testing title align left', font_color= 'grey10', align='left')
 string="""
-* adding point 1
-* adding point 2
-* adding point 3
-* adding point 4
-* adding point 5
+* Adding more text to test the single line wrapping feature implemented in this version.
 """
 frame2.content(string, align='center')
 
