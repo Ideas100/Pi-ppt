@@ -10,8 +10,6 @@ Requires a Tkinter module.
 
 `$ apt-get install python3-tk`
 
-`$ apt-get install python3-pil python3-pil.imagetk`
-
 ### Installation:
 Install using pip.
 
@@ -60,4 +58,18 @@ available in different class as metioned below.,
 Each frame has arguments like **font style, color, align and justify** which
 is set to the default that can be customizable too.
 
-Image size and codeblock **size** can be changed accordingly.
+Image and codeblock **size** can be changed accordingly.
+
+Auto line wrapping
+
+## Sample run:
+
+`$ pi-ppt --init new_slide`
+
+`$ cd new_slide/`
+
+`$ python3 new_slide.py`
+
+### Output:
+
+![image](docs/screen_shot.png)
