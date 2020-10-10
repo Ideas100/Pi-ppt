@@ -7,7 +7,7 @@ with open(path.join(here, 'README.md'), 'r') as f:
 
 setup(
     name='pippt',
-    version='1.0.0',
+    version='2.0.0',
     description='A simple presentation module',
     author='Pravin Raghul',
     author_email='pravinraghul@gmail.com',
