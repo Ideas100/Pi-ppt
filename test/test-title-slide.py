@@ -49,9 +49,8 @@ frame4.subtitle('Testing subtitle with a long text')
 # title: spliting a long text into two lines
 frame5 = add_title_slide()
 title = """
-Testing title method with a long title
-splitting into two lines
-"""
+Testing title method with a long title splitting into two lines
+ """
 subtitle="""
 Testing subtitle method with long text
 splitting and justifying it 
