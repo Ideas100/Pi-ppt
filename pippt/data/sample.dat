@@ -5,7 +5,7 @@ app = Pippt()
 # title-slide
 frame1 = add_title_slide()
 frame1.title('Sample title slide')
-frame1.subtitle('pippt')
+frame1.subtitle('subtitle:', align='center')
 
 # slide-1
 frame2 = add_slide()
@@ -30,9 +30,9 @@ frame5.title('Sample split slide-3')
 
 content = """
 Add content to left side of 
-the slide's
+the slide
 """
-frame5.content(content, align='left', justify='left')
+frame5.content(content, align='left', align_in='center')
 frame5.image(path='images/image.png', align='right')
 
 
