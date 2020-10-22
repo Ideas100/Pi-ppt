@@ -8,30 +8,28 @@ app = Pippt(title='Test split slide')
 frame1 = add_split_slide()
 frame1.title('Testing Title method')
 left_string="""
-* Adding line 1 of the contents in left
-* Adding line 2 of the contents in left
-* Adding line 3 of the contents in left
+Difference between
+* align left
+* align_in left
 """
-frame1.content(left_string, align='left')
+frame1.content(left_string, align='left', outline=True)
 right_string="""
-* Adding line 1 of the contents in right
-* Adding line 2 of the contents in right
-* Adding line 3 of the contents in right
+Difference between
+* align right
+* align_in center
 """
-frame1.content(right_string, align='right')
+frame1.content(right_string, align='right', align_in='center', outline=True)
 
 # Test-2: add_split_slide
 # title: color and align
 # content: adding content
 # image : adding image
 frame2 = add_split_slide()
-frame2.title('Testing title align left', font_color= 'grey10', align='left')
-string="""
-* adding line 1 content 
-* adding line 2 content 
-* adding line 3 content
-"""
-frame2.content(string, align='left')
+frame2.title('Testing title align center', font_color= 'grey15', align='center')
+
+frame2.content('Adding line 1 content', align='left', align_in='center')
+frame2.content('Adding line 2 content', align='left', align_in='center')
+frame2.content('Adding line 3 content', align='left', align_in='center')
 frame2.image('image/image_1.png', align='right', size=(400,300))
 
 # Test-3: add_split_slide
@@ -40,11 +38,10 @@ frame2.image('image/image_1.png', align='right', size=(400,300))
 # image: align left
 frame3 = add_split_slide()
 string="""
-* adding line 1 content 
-* adding line 2 content 
-* adding line 3 content
+* Content with align_in and justify to be center
 """
-frame3.content(string, align='right')
+frame3.title('Testing title align right', align='right')
+frame3.content(string, align='right', align_in='center', justify='center')
 frame3.image('image/image_1.png', align='left', size=(400,300))
 
 
