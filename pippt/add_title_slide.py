@@ -6,7 +6,7 @@ TITLE_FONT_COLOR = 'steel blue'
 CONTENT_FONT_COLOR = 'grey25'
 # default align and justify 
 ALIGN = 'left'
-JUSTIFY = 'center'
+JUSTIFY = 'left'
 
 class add_title_slide(Frame):
     """ add_title_slide: For title and subtitle only
@@ -36,24 +36,32 @@ class add_title_slide(Frame):
         label = Label(self, text=string, font=font + ' 50 bold',
                       fg=font_color, bg='white', justify=justify,
                       wraplength=self.width-100)
-        label.pack(side='top', padx=25, pady=(75,25))
+        label.place(relx=0.05, rely=0.15, relwidth=0.9)
         
     def subtitle(self, string, font = DEFAULT_FONT,
-                 font_color = CONTENT_FONT_COLOR,
-                 side = "top", justify = JUSTIFY):
+                 font_color = CONTENT_FONT_COLOR, align = ALIGN,
+                 justify = JUSTIFY):
         """ Subtitle of the slide
         
         string    : Subtitle of the slide
         font      : Subtitle Font style
         font_color: Subtitle Font color
-        side      : side to align the subtitle
+        align     : align the subtitle
         justify   : Justify the subtitle
         """
         # Stripping the line char
         string = string.lstrip('\n')
         string = string.rstrip('\n')
-        
+
+        # Align the subtitle
+        if align == 'left':
+            anchor = 'w'
+        elif align == 'center':
+            anchor = align
+        elif align == 'right':
+            anchor = 'e'
+
         label = Label(self, text=string, font=font + ' 28 bold',
                       fg=font_color, bg='white', justify=justify,
-                      wraplength=self.width-100)
-        label.pack(side=side, padx=25, pady=(25,75))
+                      anchor=anchor, wraplength=self.width-100)
+        label.place(relx=0.1, rely=0.6, relwidth=0.85)
