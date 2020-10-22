@@ -7,7 +7,7 @@ TITLE_FONT_COLOR = "steel blue"
 CONTENT_FONT_COLOR = "grey25"
 # default align and justify
 ALIGN = "left"
-JUSTIFY = "center"
+JUSTIFY = "left"
 # default image size 
 IMAGE_SIZE = (400, 400)
 
@@ -23,19 +23,12 @@ class add_split_slide(Frame):
         """
         LabelFrame.__init__(self, bg='white')
         self.width = self.winfo_screenwidth()
+        self.right_rely = 0.2
+        self.left_rely = 0.2
         
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=0)
-        self.columnconfigure(2, weight=1)
-        self.col = 0
-        self.left, self.right = 1, 1
-        
-        self.label = Label(self, height=4, bg='white')
-        self.label.grid(row=0, column=0,
-                        padx=25, pady=(25,0))
         self.line = Canvas(self, height=5, bg=TITLE_FONT_COLOR)
-        self.line.grid(row=1, column=0, columnspan=3,
-                       padx=10, pady=(5,10), sticky=W+E)
+        self.line.place(relx=0.5, rely=0.185, relwidth=0.975,
+                        anchor=CENTER)
 
     def title(self, string, font = DEFAULT_FONT,
               font_color = TITLE_FONT_COLOR, align = ALIGN):
@@ -46,35 +39,33 @@ class add_split_slide(Frame):
         font_color: Title font color
         align     : Title placement side
         """
-        ht, side = 0, W
-        # Stripping the line char
+        # Stripping the line char 
         string = string.lstrip('\n')
         string = string.rstrip('\n')
-        # Adding height according to lines of string
-        if '\n' in string:
-            ht=string.count('\n')
+        # auto size adjustment for text size [default size is 45]
+        size = 45
+        rely = 0.03
+        if len(string) > 40:
+            size = round(size - (len(string)%40)/2)
+            rely = 0.005
             
-        # Alignment changes for the grid
-        if   align == 'left':
-            self.col, span, side = 0, 1, W
-        elif align == 'right':
-            self.col, span, side = 2, 1, E
+        # alignment fot the title
+        if align == 'left':
+            side, just = 'w', 'left' 
         elif align == 'center':
-            self.col, span, side = 0, 3, W+E
-
-        # config the title line according to input
-        self.label.config(text=string, height=ht+1, font=font+' 45 bold',
-                          fg=font_color, justify=align, padx=20,
-                          wraplength=self.width-100)
-        self.label.grid(row=0, column=self.col, columnspan=span,
-                        padx=10, pady=(25,0), sticky=side)
-        # config the color of line according to title color
+            side, just = align, 'center'
+        elif align == 'right':
+            side, just = 'e', 'right'
+            
+        label = Label(self, text=string, bg='white',
+                      font=font+' '+str(size)+' '+ 'bold', fg=font_color,
+                      anchor=side, justify=just, wraplength=self.width-50)
         self.line.config(bg=font_color)
-        self.line.grid(row=1, column=0, columnspan=3,
-                       padx=20, pady=(5,10), sticky=W+E)
-
-    def content(self, string, align, font = DEFAULT_FONT,
-                font_color = CONTENT_FONT_COLOR, justify = JUSTIFY):
+        label.place(relx=0.05, rely=rely, relwidth=0.9)
+     
+    def content(self, string, align, font = DEFAULT_FONT, align_in = ALIGN,
+                font_color = CONTENT_FONT_COLOR, justify = JUSTIFY,
+                outline = False):
         """ Content for the slide 
         
         string    : Content string 
@@ -82,38 +73,62 @@ class add_split_slide(Frame):
         font      : Content font style
         font_color: Content font color
         justify   : Justify content
+        outline   : Show the outline of the text box
         """
         # Stripping the line char
         string = string.lstrip('\n')
         string = string.rstrip('\n')
-        # Alignment of the content
+
+        count = string.count('\n')
+        # Main Alignment of the content
         if align == 'left':
-            self.left += 1
-            row, self.col = self.left, 0
+            relx = 0.025
+            rely = self.left_rely
+            self.left_rely = self.left_rely + 0.075 + count*0.05
         elif align == 'right':
-            self.right += 1
-            row, self.col = self.right, 2
+            relx = 0.525
+            rely = self.right_rely
+            self.right_rely = self.right_rely + 0.075 + count*0.05
 
-        label = Label(self, text=string, font=font+' 24 ',fg=font_color,
-                      bg='white', justify=justify,
-                      wraplength=self.width/2)
-        label.grid(row=row, column=self.col, columnspan=1,
-                   padx=10, pady=10)
+        # Alignment inside of text box
+        if align_in == 'left':
+            anchor = 'w'
+        elif align_in == 'center':
+            anchor = align_in
+        elif align_in == 'right':
+            anchor = 'e'
 
-    def image(self, path, align, size = IMAGE_SIZE):
+        # Show the outline
+        if outline == True:
+            relief = 'solid'
+        else:
+            relief = 'flat'
+
+        label = Label(self, text=string, bg='white', font=font+' 24',
+                      fg=font_color, anchor=anchor, justify=justify,
+                      wraplength=self.width/2-100, relief=relief)
+        label.place(relx=relx, rely=rely, relwidth=0.45)
+        
+    def image(self, path, align, size = IMAGE_SIZE,
+              outline = False):
         """ Image for the slide
         
         path  : The path of the image
         align : align the image in direction
         size  : size of the image resolution
+        outline : shows the outline of the Fixed Image size
         """
         # Alignment of the content
         if align == 'left':
-            self.left += 1
-            row, self.col = self.left, 0
+            relx=0.025
         elif align == 'right':
-            self.right += 1
-            row, self.col = self.right, 2
+            relx=0.525
+
+        # Shows the outline 
+        if outline == True:
+            relief = 'solid'
+        else:
+            relief = 'flat'
             
         # Opening image file
         load = Image.open(path)
@@ -121,7 +136,7 @@ class add_split_slide(Frame):
         resize = load.resize(size, Image.ANTIALIAS)
         # Loading the image
         img = ImageTk.PhotoImage(resize)
-        label = Label(self, image=img, bg='white')
+        label = Label(self, image=img, bg='white', anchor='center',
+                      relief=relief)
         label.image = img
-        label.grid(row=row, column=self.col, columnspan=1,
-                   padx=10, pady=10)
+        label.place(relx=relx, rely=0.2, relwidth=0.45, relheight=0.75)
